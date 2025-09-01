@@ -1,5 +1,6 @@
 #ifndef TAREFA_H
 #define TAREFA_H
+#include <stdbool.h>
 
 /** 
  * @brief Estrutura que representa uma tarefa.
@@ -38,5 +39,24 @@ Tarefa* cria_tarefa(const char* nome, int prioridade, const char* data);
  * @return Ponteiro para a lista criada ou NULL em caso de erro.
  */
 Lista* cria_lista();
+
+/**
+ * @brief Insere uma nova tarefa no final da lista encadeada.
+ * 
+ * Esta função cria uma nova tarefa com os dados fornecidos e a insere
+ * no final da lista. Caso a lista esteja vazia, a nova tarefa se torna
+ * o início da lista.
+ * 
+ * @param lista Ponteiro para a lista onde a tarefa será inserida.
+ * @param nome Nome da tarefa a ser criada.
+ * @param prioridade Prioridade da tarefa (número inteiro).
+ * @param data Data associada à tarefa (string).
+ * 
+ * @return true Se a tarefa foi criada e inserida com sucesso.
+ * @return false Se ocorreu algum erro na criação da tarefa.
+ * 
+ * @note O usuário deve garantir que o ponteiro lista não seja NULL.
+ */
+bool insercao_lista(Lista* lista, const char* nome, int prioridade, const char* data);
 
 #endif

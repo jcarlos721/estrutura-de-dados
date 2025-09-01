@@ -2,6 +2,7 @@
 #include "auxiliares.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 Tarefa* cria_tarefa(const char* nome, int prioridade, const char* data){
     Tarefa* tarefa = malloc(sizeof(Tarefa));
@@ -42,5 +43,25 @@ Lista* cria_lista(){
     lista->tamanho = 0;
 
     return lista;
+}
 
+bool insercao_lista(Lista* lista, const char* nome, int prioridade, const char* data){
+    Tarefa* nova = cria_tarefa(nome, prioridade, data);
+    if(!nova){
+        printf("Erro ao criar tarefa!\n");
+        return false;
+    }
+
+    if(lista->inicio == NULL){
+        lista->inicio = nova;
+    } 
+    else {
+        Tarefa* atual = lista->inicio;
+        while(atual->next != NULL){
+            atual = atual->next;
+        }
+        atual->next = nova;  
+    }
+
+    return true;
 }
