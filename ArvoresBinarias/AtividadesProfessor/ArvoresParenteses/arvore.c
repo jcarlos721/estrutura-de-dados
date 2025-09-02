@@ -1,47 +1,63 @@
 #include "arvore.h"
-#include "leitura.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 No* cria_no(int valor){
-
-    No *novo = calloc(1, sizeof(No));
-
-    if(!novo){
-        printf("Erro ao alocar no!\n");
-        return NULL;
-    }
-
-    novo->valor = valor; 
+    No* novo = calloc(1, sizeof(No));
+    if(!novo) return NULL;
+    novo->valor = valor;
+    novo->esq = NULL;
+    novo->dir = NULL;
     return novo;
 }
 
-bool insere_no(Raiz* T, int valor) {
-    if (T == NULL) return false;
+No* constroi_arvore(char **str) {
+    if(**str == '\0') return NULL;
 
-    No* novo = cria_no(valor);
-    if (novo == NULL) return false;
-
-    No* pai = NULL;
-    No* atual = T->raiz;
-
-    while (atual != NULL) {
-        pai = atual;
-        if (valor == atual->valor) {
-            free(novo);
-            return false; 
-        }
-        atual = (valor < atual->valor) ? atual->esq : atual->dir;
+    int valor = 0;
+    while(**str >= '0' && **str <= '9') {
+        valor = valor * 10 + (**str - '0');
+        (*str)++;
     }
 
-    novo->p = pai;
+    No* novo = cria_no(valor);
 
-    if (pai == NULL)
-        T->raiz = novo; 
-    else if (valor < pai->valor)
-        pai->esq = novo;
-    else
-        pai->dir = novo;
+    if(**str == '(') {
+        (*str)++; 
+        novo->esq = constroi_arvore(str);
+    }
 
-    return true;
+    if(**str == ',') {
+        (*str)++;  
+        novo->dir = constroi_arvore(str);
+    }
+
+    if(**str == ')') {
+        (*str)++; 
+    }
+
+    return novo;
 }
+
+void pre_ordem(No* raiz) {
+    if(raiz == NULL) return;
+    printf("%d ", raiz->valor);
+    pre_ordem(raiz->esq);
+    pre_ordem(raiz->dir);
+}
+
+void em_ordem(No* raiz) {
+    if(raiz == NULL) return;
+    em_ordem(raiz->esq);
+    printf("%d ", raiz->valor);
+    em_ordem(raiz->dir);
+}
+
+void libera_arvore(No* raiz) {
+    if(!raiz) return;
+    libera_arvore(raiz->esq);
+    libera_arvore(raiz->dir);
+    free(raiz);
+}
+
+

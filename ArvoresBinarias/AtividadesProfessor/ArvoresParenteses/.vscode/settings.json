@@ -1,6 +1,16 @@
 {
     "files.associations": {
-        "stdlib.h": "c",
-        "leitura.h": "c"
-    }
+        "*.c": "c",
+        "*.h": "c"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/**"
+    ],
+    "C_Cpp.default.compilerPath": "C:/msys64/mingw64/bin/gcc.exe",
+    "C_Cpp.default.cStandard": "c99",
+    "C_Cpp.default.cppStandard": "c++17",
+    "code-runner.executorMap": {
+        "c": "gcc -Wall -Wextra -std=c99 main.c leitura.c arvore.c -o arvore.exe && .\\arvore.exe"
+    },
+    "code-runner.runInTerminal": true
 }
